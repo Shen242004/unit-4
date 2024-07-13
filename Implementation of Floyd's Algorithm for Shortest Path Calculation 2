@@ -1,0 +1,34 @@
+import sys
+
+def floyds_algorithm(n, edges, distanceThreshold):
+    INF = sys.maxsize
+    distance = [[INF for _ in range(n)] for _ in range(n)]
+
+    for i in range(n):
+        distance[i][i] = 0
+
+    for edge in edges:
+        distance[edge[0]][edge[1]] = edge[2]
+
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if distance[i][k] + distance[k][j] < distance[i][j]:
+                    distance[i][j] = distance[i][k] + distance[k][j]
+
+    print("Distance Matrix Before Applying Floyd's Algorithm:")
+    for row in distance:
+        print(row)
+
+    print("\nDistance Matrix After Applying Floyd's Algorithm:")
+    for row in distance:
+        print(row)
+
+    return distance
+
+# Test cases
+n = 5
+edges = [[0,1,2],[0,4,8],[1,2,3],[1,4,2],[2,3,1],[3,4,1]]
+distanceThreshold = 2
+
+result = floyds_algorithm(n, edges, distanceThreshold)
