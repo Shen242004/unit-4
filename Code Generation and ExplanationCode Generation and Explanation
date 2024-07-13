@@ -1,0 +1,27 @@
+# Problem 1: Find the length of the longest substring without repeating characters
+def length_of_longest_substring(s):
+    start = 0
+    max_length = 0
+    char_index_map = {}
+
+    for end in range(len(s)):
+        if s[end] in char_index_map:
+            start = max(start, char_index_map[s[end]] + 1)
+
+        char_index_map[s[end]] = end
+        max_length = max(max_length, end - start + 1)
+
+    return max_length
+
+# Problem 2: Check if a string can be segmented into words from a dictionary
+def word_break(s, wordDict):
+    dp = [False] * (len(s) + 1)
+    dp[0] = True
+
+    for i in range(1, len(s) + 1):
+        for j in range(i):
+            if dp[j] and s[j:i] in wordDict:
+                dp[i] = True
+                break
+
+    return dp[len(s)]
