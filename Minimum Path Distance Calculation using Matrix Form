@@ -1,0 +1,38 @@
+def min_path_distance(matrix):
+    n = len(matrix)
+    min_distance = float('inf')
+
+    def backtrack(node, visited, distance):
+        nonlocal min_distance
+
+        if len(visited) == n:
+            min_distance = min(min_distance, distance + matrix[node][0])
+            return
+
+        for i in range(n):
+            if i not in visited:
+                backtrack(i, visited | {i}, distance + matrix[node][i])
+
+    backtrack(0, {0}, 0)
+    return min_distance
+
+# Test Cases
+matrix1 = [
+    [0, 10, 15, 20],
+    [10, 0, 35, 25],
+    [15, 35, 0, 30],
+    [20, 25, 30, 0]
+]
+
+matrix2 = [
+    [0, 10, 10, 10],
+    [10, 0, 10, 10],
+    [10, 10, 0, 10],
+    [10, 10, 10, 0]
+]
+
+output1 = min_path_distance(matrix1)
+output2 = min_path_distance(matrix2)
+
+print("Output 1:", output1)  # Output: 80
+print("Output 2:", output2)  # Output: 40
